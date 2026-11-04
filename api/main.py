@@ -136,6 +136,16 @@ class NoteIn(BaseModel):
     text: str = Field(min_length=1, max_length=500)
 
 
+@app.get("/")
+async def index():
+    """A short index, so the bare URL says what this is instead of 404."""
+    return {
+        "service": "notes API",
+        "version": APP_VERSION,
+        "endpoints": ["/api/message", "/api/notes", "/livez", "/readyz"],
+    }
+
+
 @app.get("/api/message")
 async def message():
     return {"message": APP_MESSAGE, "version": APP_VERSION}
