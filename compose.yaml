@@ -1,6 +1,10 @@
 # The whole app on your machine: docker compose up --build
 # Services find each other by name ("db" below is a hostname inside this network).
 
+# Project name: prefixes the containers and the images this file builds.
+# Set explicitly so renaming the folder doesn't rename everything with it.
+name: cloud-seminar-assignment-clara
+
 services:
   db:
     image: postgres:16
