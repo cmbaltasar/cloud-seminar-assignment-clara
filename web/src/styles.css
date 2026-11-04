@@ -1,7 +1,20 @@
 :root {
   font-family: system-ui, sans-serif;
-  color: #1f2328;
-  background: #f6f8fa;
+
+  /* Palette */
+  --ink: #3b2b33; /* body text */
+  --ink-soft: #8a7280; /* secondary text */
+  --surface: #fff;
+  --page: #fdf2f7; /* blush background */
+  --line: #f0d3e1; /* card borders */
+  --accent: #be185d; /* buttons, highlights */
+  --accent-dark: #9d174d; /* hover */
+  --accent-soft: #fce7f1; /* badges */
+  --ok: #1a7f37; /* status dot: connected */
+  --bad: #c0273c; /* status dot and errors */
+
+  color: var(--ink);
+  background: var(--page);
 }
 
 main {
@@ -10,12 +23,19 @@ main {
   padding: 0 1rem;
 }
 
+h1 {
+  font-size: 1.6rem;
+  letter-spacing: -0.01em;
+  color: var(--accent-dark);
+}
+
 section {
-  background: #fff;
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
   padding: 1rem 1.25rem;
   margin-bottom: 1rem;
+  box-shadow: 0 1px 2px rgb(190 24 93 / 6%);
 }
 
 h2 {
@@ -23,17 +43,29 @@ h2 {
   margin-top: 0;
 }
 
+/* Number of notes, next to the heading. */
+.count {
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
 .message {
   font-size: 1.4rem;
 }
 
 .muted {
-  color: #656d76;
+  color: var(--ink-soft);
   font-size: 0.9rem;
 }
 
 .error {
-  color: #cf222e;
+  color: var(--bad);
 }
 
 .dot {
@@ -44,11 +76,11 @@ h2 {
 }
 
 .dot.ok {
-  background: #1a7f37;
+  background: var(--ok);
 }
 
 .dot.bad {
-  background: #cf222e;
+  background: var(--bad);
 }
 
 form {
@@ -60,19 +92,31 @@ form {
 input {
   flex: 1;
   padding: 0.4rem 0.6rem;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--line);
   border-radius: 6px;
   font: inherit;
+  color: inherit;
+  background: var(--surface);
+}
+
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
 }
 
 button {
   padding: 0.4rem 0.9rem;
-  border: 1px solid #1a7f37;
+  border: 1px solid var(--accent);
   border-radius: 6px;
-  background: #1a7f37;
+  background: var(--accent);
   color: #fff;
   font: inherit;
   cursor: pointer;
+}
+
+button:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
 }
 
 ul {
@@ -81,5 +125,25 @@ ul {
 }
 
 li {
-  margin: 0.3rem 0;
+  margin: 0.35rem 0;
+}
+
+li::marker {
+  color: var(--accent);
+}
+
+/* The per-note delete: a quiet text button, not a second primary action. */
+.link-danger {
+  margin-left: 0.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  text-decoration: underline;
+}
+
+.link-danger:hover {
+  background: none;
+  color: var(--bad);
 }

@@ -36,9 +36,18 @@ export default function Notes({ apiUrl }) {
       .catch((err) => setError(`Could not save the note (${err.message})`));
   }
 
+  function deleteNote(id) {
+    fetch(`${apiUrl}/api/notes/${id}`, { method: "DELETE" })
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        loadNotes();
+      })
+      .catch((err) => setError(`Could not delete the note (${err.message})`));
+  }
+
   return (
     <section>
-      <h2>Notes</h2>
+      <h2>Notes {notes.length > 0 && <span className="count">{notes.length}</span>}</h2>
       <form onSubmit={addNote}>
         <input
           value={text}
@@ -54,8 +63,16 @@ export default function Notes({ apiUrl }) {
       <ul>
         {notes.map((note) => (
           <li key={note.id}>
-            {note.text}
+            <span className="note-text">{note.text}</span>
             <span className="muted"> · {new Date(note.created_at).toLocaleString()}</span>
+            <button
+              type="button"
+              className="link-danger"
+              onClick={() => deleteNote(note.id)}
+              aria-label={`Delete note ${note.id}`}
+            >
+              delete
+            </button>
           </li>
         ))}
       </ul>

@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <main>
-      <h1>Cloud Seminar App</h1>
+      <h1>Cloud Seminar Assignment App Clara</h1>
 
       <section>
         <h2>API</h2>

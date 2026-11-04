@@ -18,6 +18,7 @@ is written from scratch in **Python (FastAPI)**, since the assignment rules out 
 | `GET /api/message` | `{"message": "<APP_MESSAGE>", "version": "<APP_VERSION>"}` |
 | `GET /api/notes` | The 100 newest notes |
 | `POST /api/notes` | Adds a note: `{"text": "..."}` |
+| `DELETE /api/notes/{id}` | Removes a note; 404 if that id is not there |
 | `GET /livez` | Liveness probe: 200 while the process runs |
 | `GET /readyz` | Readiness probe: 200, or 503 while shutting down |
 

@@ -106,7 +106,7 @@ app = FastAPI(title="Notes API", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[CORS_ORIGIN],
-    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
     allow_headers=["Content-Type"],
 )
 
@@ -142,7 +142,13 @@ async def index():
     return {
         "service": "notes API",
         "version": APP_VERSION,
-        "endpoints": ["/api/message", "/api/notes", "/livez", "/readyz"],
+        "endpoints": [
+            "/api/message",
+            "/api/notes",
+            "/api/notes/{id}",
+            "/livez",
+            "/readyz",
+        ],
     }
 
 
@@ -179,3 +185,13 @@ async def create_note(note: NoteIn):
             )
         ).fetchone()
     return {"id": row[0], "text": text, "created_at": row[1].isoformat()}
+
+
+@app.delete("/api/notes/{note_id}", status_code=204)
+async def delete_note(note_id: int):
+    """Deleting an id that is not there is a 404, not a silent success:
+    the caller asked to remove something that never existed."""
+    async with pool.connection() as conn:
+        cur = await conn.execute("DELETE FROM notes WHERE id = %s", (note_id,))
+        if cur.rowcount == 0:
+            raise HTTPException(status_code=404, detail="note not found")
